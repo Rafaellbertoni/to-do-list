@@ -90,6 +90,16 @@ def deletar_tarefa(descricao: str):
     conexao.commit()
     conexao.close()
     
+    
+def alterar_tarefa(descricao: str, descricao_nova: str):
+    conexao = sqlite3.connect('to-do-list.db')
+    cursor = conexao.cursor()
+    
+    cursor.execute('UPDATE tarefas SET descricao = ? WHERE descricao = ?', (descricao_nova, descricao))
+    
+    conexao.commit()
+    conexao.close()
+    
         
     
 def main():
@@ -100,6 +110,7 @@ def main():
         print('[TAREFAS PENDENTES -- 4]')
         print('[TAREFAS CONCLUIDAS -- 5]')
         print('[DELETAR TAREFA] -- 6')
+        print('[ALTERAR TAREFA -- 7]')
         print('[SAIR] -- 0')
         
         while True:
@@ -133,7 +144,12 @@ def main():
         elif opcoes == 6:
             descricao = input('Qual a descrição da tarefa? ').strip().lower()
             deletar_tarefa(descricao)
-        
+            
+        elif opcoes == 7:
+            descricao = input('Qual a descrição da tarefa? ').strip().lower()
+            nova_descricao = input('Qual a nova descricao? ').strip().lower()
+            alterar_tarefa(descricao, nova_descricao)
+            
         elif opcoes == 0:
             break
             
